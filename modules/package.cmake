@@ -1,0 +1,47 @@
+# global CPack settings/tmp_vars:
+set(CPACK_OUTPUT_FILE_PREFIX "bin")
+set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
+
+set(PACKAGE_BASENAME)
+set(PACKAGE_BASENAME "${CMAKE_PROJECT_NAME}")
+set(PACKAGE_BASENAME "${PACKAGE_BASENAME}-${CPACK_PACKAGE_VERSION_MAJOR}")
+set(PACKAGE_BASENAME "${PACKAGE_BASENAME}.${CPACK_PACKAGE_VERSION_MINOR}")
+set(PACKAGE_BASENAME "${PACKAGE_BASENAME}.${CPACK_PACKAGE_VERSION_PATCH}")
+
+# package: (binary install packages)
+set(CPACK_GENERATOR "ZIP")
+set(CPACK_PACKAGE_FILE_NAME "${PACKAGE_BASENAME}_inst")
+list(APPEND ADDITIONAL_MAKE_CLEAN_FILES_LIST "${PROJECT_BINARY_DIR}/bin/${CPACK_PACKAGE_FILE_NAME}.zip")
+
+# package_source: (source package)
+set(CPACK_SOURCE_GENERATOR "ZIP")
+
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PACKAGE_BASENAME}_dev")
+list(APPEND ADDITIONAL_MAKE_CLEAN_FILES_LIST "${PROJECT_BINARY_DIR}/bin/${CPACK_SOURCE_PACKAGE_FILE_NAME}.zip")
+
+set(CPACK_SOURCE_IGNORE_FILES)
+find_dirs_recursive(CPACK_SOURCE_IGNORE_FILES ".svn" "${PROJECT_SOURCE_DIR}")
+list(APPEND CPACK_SOURCE_IGNORE_FILES
+    "${PROJECT_SOURCE_DIR}/src/config.h"
+    "${PROJECT_SOURCE_DIR}/.project")
+
+include(CPack)
+
+# package_testpack: (autozip testpack)
+find_program(CPACK_PROGRAM NAMES cpack)
+if(CPACK_PROGRAM)
+    add_custom_target(package_testpack
+    COMMAND ${CPACK_PROGRAM} 
+        -G ZIP
+        --config ${PROJECT_BINARY_DIR}/CPackSourceConfig.cmake
+        -D CPACK_INCLUDE_TOPLEVEL_DIRECTORY=0
+        -D CPACK_PACKAGE_FILE_NAME=testpack
+        -D CPACK_INSTALLED_DIRECTORIES="${PROJECT_SOURCE_DIR}/testpack/\;."
+    COMMAND ${CMAKE_COMMAND} -E remove_directory _CPack_Packages
+    COMMENT "Create a testpack ZIP archive")
+    list(APPEND ADDITIONAL_MAKE_CLEAN_FILES_LIST "${PROJECT_BINARY_DIR}/bin/testpack.zip")
+else()
+    message("CPack program not found, some additional targets may not be available")
+endif()
