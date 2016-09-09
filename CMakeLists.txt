@@ -6,7 +6,7 @@ set(VERSION_MAJOR 0)
 set(VERSION_MINOR 0)
 set(VERSION_PATCH 0)
 
-include(${PROJECT_SOURCE_DIR}/modules/macro.cmake)
+include("${PROJECT_SOURCE_DIR}/modules/macro.cmake")
 include("${PROJECT_SOURCE_DIR}/modules/vars.cmake")
 include("${PROJECT_SOURCE_DIR}/modules/configure.cmake")
 include("${PROJECT_SOURCE_DIR}/modules/package.cmake")
