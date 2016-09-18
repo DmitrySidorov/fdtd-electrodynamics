@@ -51,6 +51,17 @@ The resources/docs can also be installed using:
 sudo apt-get install gsl-doc-info gsl-doc-pdf gsl-ref-html gsl-ref-psdoc
 ```
 
+## Compilation Process 
+
+The compilation will be done using [CLion](https://www.jetbrains.com/clion/). In the future we will add more compilation ways, but for now, we recommend compiling with this method. It is easy, fast and bulletproof (if you follow the steps with care). 
+
+CLion is a cross-platform IDE for C and C++. Thanks to native C and C++ support, including C++11 standard, libc++ and Boost, CLion knows your code through and through and takes care of the routine while you focus on the important things. Be sure to check the [web page](https://www.jetbrains.com/clion/) for the documentation and installation process. 
+
+Although it is a subscription based IDE, they have discounts for startups, graduating studentds and competitive tool users, and free subscriptions for students, teachers, education, training, and open source projects. Check this [web page](https://www.jetbrains.com/clion/buy/#edition=discounts) for more information.
+
+
+
+
 
 
 
