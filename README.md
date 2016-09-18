@@ -1,6 +1,6 @@
-# fdtd-electrodynamics
+# FDTD - Electrodynamics
 
-Simple FDTD client for electrodynamics purposes 
+Simple FDTD client for electrodynamics purposes.
 
 # Compilation process
 
