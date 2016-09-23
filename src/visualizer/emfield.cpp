@@ -84,6 +84,12 @@ void EMField::apply_source(){
 			double intpart;
 			sources.insert(src);
 		}
+
+        // One simple source
+       /* src.i = 0;
+        src.j = 0;
+        src.mag = 10;
+        sources.insert(src);*/
 	}
 
 	//apply sources (at each evaluation run)
