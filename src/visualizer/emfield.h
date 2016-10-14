@@ -81,6 +81,8 @@ private:
 	double t;
 	double dt;
 	double dl;
+    double sigma;
+    double sigma_m;
 
 	const double ndt = 50; //period T = ndt*dt
 };
