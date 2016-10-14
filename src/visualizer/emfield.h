@@ -22,11 +22,13 @@ public:
 protected:
 
 	struct TECell{
-		TECell(): Ex{0}, Ey{0}, Hz{0}, epsilon_mult{1}, mu_mult{1} {;}
+		TECell(): Ex{0}, Ey{0}, Hz {0},Hzx{0}, Hzy {0}, epsilon_mult{1}, mu_mult{1} {;}
 
 		double Ex;
 		double Ey;
-		double Hz;
+		double Hzx;
+        double Hzy;
+        double Hz;
 		double epsilon_mult;
 		double mu_mult;
 	};
@@ -81,8 +83,10 @@ private:
 	double t;
 	double dt;
 	double dl;
-    double sigma;
-    double sigma_m;
+    double sigmax;
+    double sigmay;
+    double sigmam_x;
+    double sigmam_y;
 
 	const double ndt = 50; //period T = ndt*dt
 };

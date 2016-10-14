@@ -39,7 +39,7 @@ void VisualField::calc_energy() {
 	for(int i = 0; i < Nx; i++)
 		for(int j = 0; j < Ny; j++){
 			e_energy[i][j] = std::sqrt(EMField::getField()[i][j].Ex*EMField::getField()[i][j].Ex + EMField::getField()[i][j].Ey*EMField::getField()[i][j].Ey);
-			m_energy[i][j] = std::sqrt(EMField::getField()[i][j].Hz*EMField::getField()[i][j].Hz);
+			m_energy[i][j] = std::sqrt(EMField::getField()[i][j].Hzx*EMField::getField()[i][j].Hzx + EMField::getField()[i][j].Hzy*EMField::getField()[i][j].Hzy);
 
 			if(EMField::getSources().count(SRC(i,j)) == 0){
 				int_e_energy += e_energy[i][j];

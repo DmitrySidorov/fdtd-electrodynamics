@@ -16,11 +16,11 @@
 #include "optics.h"
 
 EMField::EMField(int Nx, int Ny):
-Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}, sigma {1}, sigma_m {1}
+Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}, sigmax {1}, sigmay {1}, sigmam_y{1}, sigmam_x {1}
 {
 	lambda = dl*std::min(Nx,Ny)/10;
 	dt = lambda*sqrt(epsilon*mu)/(2*ndt);
-	sigma = sigma_m/mu*epsilon;
+	sigmax = sigmam_x/mu*epsilon;
 
 	field.resize(Nx);
 	for(auto& x : field) x.resize(Ny);
@@ -56,8 +56,8 @@ void EMField::eval_cell_E(int i, int j){
 	TECell& cij1 = c(i,j-1);
 	TECell& ci1j = c(i-1,j);
 
-	cij.Ex += (dt/dl*(1/epsilon) + sigma)*( (cij.Hz/cij.epsilon_mult - cij1.Hz/cij1.epsilon_mult) );
-	cij.Ey += (dt/dl*(-1/epsilon) + sigma)*( (cij.Hz/cij.epsilon_mult - ci1j.Hz/ci1j.epsilon_mult) );
+	cij.Ex += (dt/dl*(1/epsilon) + sigmax)*( (cij.Hz/cij.epsilon_mult - cij1.Hz/cij1.epsilon_mult) );
+	cij.Ey += (dt/dl*(-1/epsilon) + sigmay)*( (cij.Hz/cij.epsilon_mult - ci1j.Hz/ci1j.epsilon_mult) );
 }
 
 void EMField::eval_cell_H(int i, int j){
@@ -66,7 +66,9 @@ void EMField::eval_cell_H(int i, int j){
 	TECell& cij1 = c(i,j+1);
 	TECell& ci1j = c(i+1,j);
 
-	cij.Hz += (dt/dl*(1/mu) + sigma_m)*( (cij1.Ex/cij1.mu_mult - cij.Ex/cij.mu_mult) - (ci1j.Ey/ci1j.mu_mult - cij.Ey/cij.mu_mult) );
+	cij.Hzx += (dt/dl*(1/mu) + sigmam_x)*( - (ci1j.Ey/ci1j.mu_mult - cij.Ey/cij.mu_mult) );
+	cij.Hzy += (dt/dl*(1/mu) + sigmam_y)*( (cij1.Ex/cij1.mu_mult - cij.Ex/cij.mu_mult) );
+    cij.Hz = cij.Hzx + cij.Hzy;
 }
 
 void EMField::apply_source(){
