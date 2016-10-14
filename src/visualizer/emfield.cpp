@@ -55,8 +55,14 @@ void EMField::eval_cell_E(int i, int j){
 	TECell& cij1 = c(i,j-1);
 	TECell& ci1j = c(i-1,j);
 
-	cij.Ex += (dt/dl*(1/epsilon))*( (cij.Hz/cij.epsilon_mult - cij1.Hz/cij1.epsilon_mult) ) - cij.Ex*cij.sigmax*dt/(cij.epsilon_mult*epsilon)  ;
-	cij.Ey += (dt/dl*(-1/epsilon))*( (cij.Hz/cij.epsilon_mult - ci1j.Hz/ci1j.epsilon_mult)  - cij.Ex*cij.sigmay*dt/cij.epsilon_mult*epsilon);
+    double Hij = cij.Hzx + cij.Hzy;
+    double Hij1 = cij1.Hzx + cij1.Hzy;
+    double Hi1j = ci1j.Hzx + ci1j.Hzy;
+
+	//cij.sigmax = cij.sigmam_x*epsilon/mu;
+
+	cij.Ex += (dt/dl*(1/epsilon))*( (Hij/cij.epsilon_mult - Hij1/cij1.epsilon_mult) ) - cij.Ex*cij.sigmax*dt/(cij.epsilon_mult*epsilon)  ;
+	cij.Ey += (dt/dl*(-1/epsilon))*( (Hij/cij.epsilon_mult - Hi1j/ci1j.epsilon_mult)  - cij.Ex*cij.sigmay*dt/cij.epsilon_mult*epsilon);
 }
 
 void EMField::eval_cell_H(int i, int j){
@@ -95,8 +101,11 @@ void EMField::apply_source(){
 
 	//apply sources (at each evaluation run)
 	for(auto& src : sources)
-		field[src.i][src.j].Hz = src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
+		field[src.i][src.j].Hzx = src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
+	for(auto& src : sources)
+		field[src.i][src.j].Hzy = src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
 }
+
 
 void EMField::evaluate(){
 
