@@ -22,7 +22,8 @@ public:
 protected:
 
 	struct TECell{
-		TECell(): Ex{0}, Ey{0}, Hz {0},Hzx{0}, Hzy {0}, epsilon_mult{1}, mu_mult{1} {;}
+		TECell(): Ex{0}, Ey{0}, Hz {0},Hzx{0}, Hzy {0}, epsilon_mult{1}, mu_mult{1}, sigmax{0}, sigmay{0}, sigmam_x {0},
+		sigmam_y {0} {;}
 
 		double Ex;
 		double Ey;
@@ -31,6 +32,10 @@ protected:
         double Hz;
 		double epsilon_mult;
 		double mu_mult;
+		double sigmax;
+		double sigmay;
+		double sigmam_x;
+		double sigmam_y;
 	};
 
 	class SRC{
@@ -83,10 +88,6 @@ private:
 	double t;
 	double dt;
 	double dl;
-    double sigmax;
-    double sigmay;
-    double sigmam_x;
-    double sigmam_y;
 
 	const double ndt = 50; //period T = ndt*dt
 };

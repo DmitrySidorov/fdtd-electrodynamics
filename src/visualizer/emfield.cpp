@@ -16,11 +16,10 @@
 #include "optics.h"
 
 EMField::EMField(int Nx, int Ny):
-Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}, sigmax {1}, sigmay {1}, sigmam_y{1}, sigmam_x {1}
+Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}
 {
 	lambda = dl*std::min(Nx,Ny)/10;
 	dt = lambda*sqrt(epsilon*mu)/(2*ndt);
-	sigmax = sigmam_x/mu*epsilon;
 
 	field.resize(Nx);
 	for(auto& x : field) x.resize(Ny);
@@ -68,7 +67,6 @@ void EMField::eval_cell_H(int i, int j){
 
 	cij.Hzx += (dt/dl*(1/mu) + sigmam_x)*( - (ci1j.Ey/ci1j.mu_mult - cij.Ey/cij.mu_mult) );
 	cij.Hzy += (dt/dl*(1/mu) + sigmam_y)*( (cij1.Ex/cij1.mu_mult - cij.Ex/cij.mu_mult) );
-    cij.Hz = cij.Hzx + cij.Hzy;
 }
 
 void EMField::apply_source(){
