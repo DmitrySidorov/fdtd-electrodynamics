@@ -65,8 +65,8 @@ void EMField::eval_cell_H(int i, int j){
 	TECell& cij1 = c(i,j+1);
 	TECell& ci1j = c(i+1,j);
 
-	cij.Hzx += (dt/dl*(1/mu))*( - (ci1j.Ey/ci1j.mu_mult - cij.Ey/cij.mu_mult) );
-	cij.Hzy += (dt/dl*(1/mu))*( (cij1.Ex/cij1.mu_mult - cij.Ex/cij.mu_mult) );
+	cij.Hzx += (dt/dl*(1/mu))*( - (ci1j.Ey/ci1j.mu_mult - cij.Ey/cij.mu_mult) - cij.Hzx*cij.sigmam_x*dt/cij.mu_mult*mu );
+	cij.Hzy += (dt/dl*(1/mu))*( (cij1.Ex/cij1.mu_mult - cij.Ex/cij.mu_mult) - cij.Hzy*cij.sigmam_y*dt/cij.mu_mult*mu  );
 }
 
 void EMField::apply_source(){
