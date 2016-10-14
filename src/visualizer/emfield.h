@@ -22,7 +22,7 @@ public:
 protected:
 
 	struct TECell{
-		TECell(): Ex{0}, Ey{0}, Hz {0},Hzx{0}, Hzy {0}, epsilon_mult{1}, mu_mult{1}, sigmax{0}, sigmay{0}, sigmam_x {0},
+		TECell(): Ex{0}, Ey{0}, Hz {0}, Hzx{0}, Hzy {0}, epsilon_mult{1}, mu_mult{1}, sigmax{0}, sigmay{0}, sigmam_x {0},
 		sigmam_y {0} {;}
 
 		double Ex;
