@@ -55,8 +55,8 @@ void EMField::eval_cell_E(int i, int j){
 	TECell& cij1 = c(i,j-1);
 	TECell& ci1j = c(i-1,j);
 
-	cij.Ex += (dt/dl*(1/epsilon) + sigmax)*( (cij.Hz/cij.epsilon_mult - cij1.Hz/cij1.epsilon_mult) );
-	cij.Ey += (dt/dl*(-1/epsilon) + sigmay)*( (cij.Hz/cij.epsilon_mult - ci1j.Hz/ci1j.epsilon_mult) );
+	cij.Ex += (dt/dl*(1/epsilon))*( (cij.Hz/cij.epsilon_mult - cij1.Hz/cij1.epsilon_mult) ) - cij.Ex*cij.sigmax*dt/(cij.epsilon_mult*epsilon)  ;
+	cij.Ey += (dt/dl*(-1/epsilon))*( (cij.Hz/cij.epsilon_mult - ci1j.Hz/ci1j.epsilon_mult)  - cij.Ex*cij.sigmay*dt/cij.epsilon_mult*epsilon);
 }
 
 void EMField::eval_cell_H(int i, int j){
@@ -65,8 +65,8 @@ void EMField::eval_cell_H(int i, int j){
 	TECell& cij1 = c(i,j+1);
 	TECell& ci1j = c(i+1,j);
 
-	cij.Hzx += (dt/dl*(1/mu) + sigmam_x)*( - (ci1j.Ey/ci1j.mu_mult - cij.Ey/cij.mu_mult) );
-	cij.Hzy += (dt/dl*(1/mu) + sigmam_y)*( (cij1.Ex/cij1.mu_mult - cij.Ex/cij.mu_mult) );
+	cij.Hzx += (dt/dl*(1/mu))*( - (ci1j.Ey/ci1j.mu_mult - cij.Ey/cij.mu_mult) );
+	cij.Hzy += (dt/dl*(1/mu))*( (cij1.Ex/cij1.mu_mult - cij.Ex/cij.mu_mult) );
 }
 
 void EMField::apply_source(){
