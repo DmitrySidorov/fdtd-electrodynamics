@@ -35,12 +35,14 @@ Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}
 #endif
 
 	//create optical elements
-	/*for(int i = 0; i < Nx; i++)
+	for(int i = 0; i < Nx; i++)
 		for(int j = 0; j < Ny; j++){
-			                         //cx,  cy,  r, h, H,x,y
-			if(opcs::is_pt_in_lp_lens(200,Ny/2,250,230,200,i,j))
-				field[i][j].epsilon_mult = 3.7;
-		}*/
+            //cx,  cy,  width, height, x,y
+			if(!opcs::is_out_box(150,150,220,220,i,j))
+				//field[i][j].epsilon_mult = 3.7;
+				field[i][j].sigmam_x = 0.08;
+				field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
+		}
 }
 
 //account for boundary conditions
@@ -59,9 +61,6 @@ void EMField::eval_cell_E(int i, int j){
     double Hij1 = cij1.Hzx + cij1.Hzy;
     double Hi1j = ci1j.Hzx + ci1j.Hzy;
 
-	cij.sigmax = cij.sigmam_x*epsilon/mu;
-    cij1.sigmax = cij1.sigmam_x*epsilon/mu;
-	ci1j.sigmax = ci1j.sigmam_x*epsilon/mu;
 
 
 	cij.Ex += (dt/dl*(1/epsilon))*( (Hij/cij.epsilon_mult - Hij1/cij1.epsilon_mult) ) - cij.Ex*cij.sigmax*dt/(cij.epsilon_mult*epsilon)  ;
@@ -85,7 +84,7 @@ void EMField::apply_source(){
 		SRC src;
 		double k = 2*M_PI/lambda;
 
-		for(int y = 0; y < Ny; y++){
+		/*for(int y = 0; y < Ny; y++){
 			src = SRC(0,y);
 			//Gaussian
 			//src.mag = std::exp(-std::pow((y-Ny/2)/(4*lambda),2));
@@ -93,13 +92,13 @@ void EMField::apply_source(){
 
 			double intpart;
 			sources.insert(src);
-		}
+		}*/
 
         // One simple source
-       /* src.i = 0;
-        src.j = 0;
-        src.mag = 10;
-        sources.insert(src);*/
+        src.i = Nx/2;
+        src.j = Ny/2;
+        src.mag = 14;
+        sources.insert(src);
 	}
 
 	//apply sources (at each evaluation run)
