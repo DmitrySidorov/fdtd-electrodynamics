@@ -59,7 +59,10 @@ void EMField::eval_cell_E(int i, int j){
     double Hij1 = cij1.Hzx + cij1.Hzy;
     double Hi1j = ci1j.Hzx + ci1j.Hzy;
 
-	//cij.sigmax = cij.sigmam_x*epsilon/mu;
+	cij.sigmax = cij.sigmam_x*epsilon/mu;
+    cij1.sigmax = cij1.sigmam_x*epsilon/mu;
+	ci1j.sigmax = ci1j.sigmam_x*epsilon/mu;
+
 
 	cij.Ex += (dt/dl*(1/epsilon))*( (Hij/cij.epsilon_mult - Hij1/cij1.epsilon_mult) ) - cij.Ex*cij.sigmax*dt/(cij.epsilon_mult*epsilon)  ;
 	cij.Ey += (dt/dl*(-1/epsilon))*( (Hij/cij.epsilon_mult - Hi1j/ci1j.epsilon_mult)  - cij.Ex*cij.sigmay*dt/cij.epsilon_mult*epsilon);
