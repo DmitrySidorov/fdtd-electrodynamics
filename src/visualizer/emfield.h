@@ -10,6 +10,7 @@
 
 #define FDTD_EMFIELD_MULTI 1
 
+#include <cmath>
 #include <vector>
 #include <set>
 #include <memory>
@@ -87,6 +88,9 @@ private:
 	double t;
 	double dt;
 	double dl;
+
+    double tau=1/(M_PI*pow(10,1)*5);
+    double t0= 6*tau;
 
 	const double ndt = 50; //period T = ndt*dt
 };

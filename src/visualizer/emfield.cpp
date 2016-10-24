@@ -38,10 +38,37 @@ Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}
 	for(int i = 0; i < Nx; i++)
 		for(int j = 0; j < Ny; j++){
             //cx,  cy,  width, height, x,y
-			if(!opcs::is_out_box(150,150,220,220,i,j))
+			if(opcs::is_out_box(0,0,600,100,i,j))
 				//field[i][j].epsilon_mult = 3.7;
-				field[i][j].sigmam_x = 0.08;
+				field[i][j].sigmam_x = 0.2;
 				field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
+		}
+
+	for(int i = 0; i < Nx; i++)
+		for(int j = 0; j < Ny; j++){
+			//cx,  cy,  width, height, x,y
+			if(opcs::is_out_box(0,300,600,100,i,j))
+				//field[i][j].epsilon_mult = 3.7;
+				field[i][j].sigmam_x = 0.2;
+			field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
+		}
+
+	for(int i = 0; i < Nx; i++)
+		for(int j = 0; j < Ny; j++){
+			//cx,  cy,  width, height, x,y
+			if(opcs::is_out_box(0,0,100,600,i,j))
+				//field[i][j].epsilon_mult = 3.7;
+				field[i][j].sigmam_x = 0.01;
+				field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
+		}
+
+	for(int i = 0; i < Nx; i++)
+		for(int j = 0; j < Ny; j++){
+			//cx,  cy,  width, height, x,y
+			if(opcs::is_out_box(300,0,100,600,i,j))
+				//field[i][j].epsilon_mult = 3.7;
+				field[i][j].sigmam_x = 0.01;
+			field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
 		}
 }
 
@@ -95,10 +122,13 @@ void EMField::apply_source(){
 		}*/
 
         // One simple source
-        src.i = Nx/2;
-        src.j = Ny/2;
-        src.mag = 14;
-        sources.insert(src);
+       src.i = Nx/2;
+       src.j = Ny/2;
+       src.mag = 10;
+       sources.insert(src);
+
+		//field[Nx/2][Ny/2].Hzx = std::exp(-std::pow((t-t0)/ tau,3));
+		//field[Nx/2][Ny/2].Hzy = std::exp(-std::pow((t-t0)/ tau,2));
 	}
 
 	//apply sources (at each evaluation run)
@@ -106,6 +136,13 @@ void EMField::apply_source(){
 		field[src.i][src.j].Hzx = src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
 	for(auto& src : sources)
 		field[src.i][src.j].Hzy = src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
+
+
+	/*for(auto& src : sources)
+		field[src.i][src.j].Hzx = std::exp(-std::pow((t-t0)/ tau,2));
+	for(auto& src : sources)
+		field[src.i][src.j].Hzy = std::exp(-std::pow((t-t0)/ tau,2));*/
+
 }
 
 
@@ -124,7 +161,7 @@ void EMField::evaluate(){
 		threads[i] = std::thread(eval_thread,this,eval_cell_ptr(&EMField::eval_cell_H),i);
 	for(auto& x : threads) x.join();
 
-	apply_source();
+	//apply_source();
 
 #else
 	//E-field step
