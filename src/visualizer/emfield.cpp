@@ -133,9 +133,9 @@ void EMField::apply_source(){
 
 	//apply sources (at each evaluation run)
 	for(auto& src : sources)
-		field[src.i][src.j].Hzx = src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
+		field[src.i][src.j].Hzx += src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
 	for(auto& src : sources)
-		field[src.i][src.j].Hzy = src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
+		field[src.i][src.j].Hzy += src.mag*std::sin(M_PI*t/(ndt*dt) + src.phase);
 
 
 	/*for(auto& src : sources)
@@ -144,7 +144,6 @@ void EMField::apply_source(){
 		field[src.i][src.j].Hzy = std::exp(-std::pow((t-t0)/ tau,2));*/
 
 }
-
 
 void EMField::evaluate(){
 
