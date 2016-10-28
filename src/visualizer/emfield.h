@@ -88,6 +88,7 @@ private:
 	double t;
 	double dt;
 	double dl;
+    double lambda_res;
 
     double tau=1/(M_PI*pow(10,1)*5);
     double t0= 6*tau;
