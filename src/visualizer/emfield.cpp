@@ -124,7 +124,7 @@ void EMField::apply_source(){
         // One simple source
        src.i = Nx/2;
        src.j = Ny/2;
-       src.mag = 10;
+       src.mag = 1;
        sources.insert(src);
 
 		//field[Nx/2][Ny/2].Hzx = std::exp(-std::pow((t-t0)/ tau,3));
