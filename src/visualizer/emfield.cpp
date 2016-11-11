@@ -40,7 +40,7 @@ Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}
             //cx,  cy,  width, height, x,y
 			if(opcs::is_out_box(0,0,600,100,i,j))
 				//field[i][j].epsilon_mult = 3.7;
-				field[i][j].sigmam_x = 0.2;
+				field[i][j].sigmam_x = 0.20;
 				field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
 		}
 
@@ -49,7 +49,7 @@ Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}
 			//cx,  cy,  width, height, x,y
 			if(opcs::is_out_box(0,300,600,100,i,j))
 				//field[i][j].epsilon_mult = 3.7;
-				field[i][j].sigmam_x = 0.2;
+				field[i][j].sigmam_x = 0.20;
 			field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
 		}
 
@@ -58,7 +58,7 @@ Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}
 			//cx,  cy,  width, height, x,y
 			if(opcs::is_out_box(0,0,100,600,i,j))
 				//field[i][j].epsilon_mult = 3.7;
-				field[i][j].sigmam_x = 0.01;
+				field[i][j].sigmam_x = 0.02;
 				field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
 		}
 
@@ -67,7 +67,7 @@ Nx{Nx}, Ny{Ny}, t{0}, epsilon {10}, mu {10}, dl {1}
 			//cx,  cy,  width, height, x,y
 			if(opcs::is_out_box(300,0,100,600,i,j))
 				//field[i][j].epsilon_mult = 3.7;
-				field[i][j].sigmam_x = 0.01;
+				field[i][j].sigmam_x = 0.02;
 			field[i][j].sigmax = field[i][j].sigmam_x*epsilon/mu;
 		}
 }
